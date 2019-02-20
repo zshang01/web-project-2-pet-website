@@ -16,15 +16,42 @@ router.get("/", function(req, res) {
 	}]);
 });
 
+router.get("/fetchUser", function(request, response) {
+	mongoClient.connect(url, function(error, client) {
+		assert.equal(error, null);
+		const token = request.query.token;
+		console.log(request.query);
+		const db = client.db("pet-website");
+		const tableName = "users-profile";
+		db.collection(tableName).findOne(
+			{_id: token}, function(error, result) {
+				if (error !== undefined && error !== null) {	// occurs error
+					response.status(500);
+					client.close();
+					response.send("Since server encounters error, registration failed. details: " + error.message);
+				} else if (result === null) {
+					response.status(400);
+					client.close();
+					response.send("Cannot find user profile with email " + token + ". ");
+				} else {
+					console.log(result);
+					response.send({
+						email: result._id,
+						username: result.username
+					});
+				}
+			});
+	});
+});
+
 router.post("/register", function(request, response) {
 	mongoClient.connect(url, function(error, client) {
 		assert.equal(error, null);
 		const data = request.body.data;
-		console.log(request.body);
 		const db = client.db("pet-website");
 		const tableName = "users-profile";
 		db.collection(tableName).findOne(
-			{_id: data.username}, function(error, result) {
+			{_id: data.email}, function(error, result) {
 				if (error !== undefined && error !== null) {	// occurs error
 					response.status(500);
 					client.close();
@@ -32,10 +59,10 @@ router.post("/register", function(request, response) {
 				} else if (result !== null) {
 					response.status(400);
 					client.close();
-					response.send("Username " + data.username + " has been occupied. Try another one. ");
+					response.send("Email " + data.email + " has been occupied. Try another one. ");
 				} else {
 					db.collection(tableName).insertOne(
-						{_id: data.username, password: data.password},
+						{_id: data.email, username: data.username, password: data.password},
 						function(error, result) {
 							assert.equal(null, error);
 							assert.equal(1, result.insertedCount);

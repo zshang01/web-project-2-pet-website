@@ -9,23 +9,41 @@ class UserProfile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			validUser: null
+			username: "",
+			token: null,
+			validUser: null,
 		};
 	}
 
 	componentDidMount() {
 		const cookies = new Cookies();
 		const token = cookies.get("pwLoggedIn");
-		if (token === undefined || token === null) {
+		if (token === undefined || token === null || token === "") {
 			this.setState({
 				validUser: false,
 			});
 		} else {
-			// TODO: fetch user profile from database by token and add to this.state
+			console.log("log-in token: " + token);
+			axios.get("/users/fetchUser", {
+				params: {
+					token: token,
+				}
+			}).then((response) => {
+				console.log(response);
+				this.setState({
+					email: response.data.email,
+					username: response.data.username,
+					validUser: true,
+				});
+			});
 		}
 	}
 
 	renderProfile() {
+		let greetingsInfo = null;
+		if (this.state.username !== undefined && this.state.username !== null && this.state.username !== "") {
+			greetingsInfo = (<h1>Hello {this.state.username}! </h1>);
+		}
 		return (
 			<Container>
 				<Row>
@@ -33,7 +51,7 @@ class UserProfile extends React.Component {
 						<img className={"avatar"} src={"images/avatar.svg"} alt="" />
 					</Col>
 					<Col lg={"9"}>
-						<h1>Basic Information Here</h1>
+						{greetingsInfo}
 					</Col>
 				</Row>
 			</Container>
@@ -42,8 +60,7 @@ class UserProfile extends React.Component {
 
 	render() {
 		if (this.state.validUser === false) {
-			return this.renderProfile();
-			// return (<Redirect to={"/register"}/>);
+			return (<Redirect to={"/login"}/>);
 		} else {
 			return this.renderProfile();
 		}
