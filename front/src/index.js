@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavigationBar from "./pages/NavigationBar";
 import DetailInformation from "./pages/DetailInformation";
+import Article from "./pages/Article";
 import * as serviceWorker from "./serviceWorker";
 
 const routing = (
@@ -23,6 +24,7 @@ const routing = (
 				<Route path="/contact" component={PetRecommendation} />
 				<Route path="/detail" component={DetailInformation} />
 				<Route path="/recommendation" component={PetRecommendation} />
+				<Route path="/articles/:id" component={Article} />
 			</div>
 		</Router>
 	</div>
