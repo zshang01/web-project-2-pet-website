@@ -23,7 +23,6 @@ class UserProfile extends React.Component {
 				validUser: false,
 			});
 		} else {
-			console.log("log-in token: " + token);
 			axios.get("/users/fetchUser", {
 				params: {
 					token: token,

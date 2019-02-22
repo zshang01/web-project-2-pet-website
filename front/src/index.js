@@ -8,6 +8,7 @@ import Contact from "./pages/contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavigationBar from "./pages/NavigationBar";
+import DetailInformation from "./pages/DetailInformation";
 import * as serviceWorker from "./serviceWorker";
 
 const routing = (
@@ -20,6 +21,7 @@ const routing = (
 				<Route path="/register" component={Register} />
 				<Route path="/user-profile" component={UserProfile} />
 				<Route path="/contact" component={Contact} />
+				<Route path="/detail" component={DetailInformation} />
 			</div>
 		</Router>
 	</div>

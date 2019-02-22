@@ -35,6 +35,7 @@ router.get("/fetchUser", function(request, response) {
 					response.send("Cannot find user profile with email " + token + ". ");
 				} else {
 					console.log(result);
+					client.close();
 					response.send({
 						email: result._id,
 						username: result.username
@@ -70,6 +71,39 @@ router.post("/register", function(request, response) {
 							client.close();
 							response.json({"message": "finish"});
 						});
+				}
+			});
+	});
+});
+
+router.post("/update-profile", function(request, response) {
+	mongoClient.connect(url, function(error, client) {
+		assert.equal(error, null);
+		const data = request.body.data;
+		const db = client.db("pet-website");
+		const tableName = "users-profile";
+		db.collection(tableName).findOneAndUpdate(
+			{_id: data.email},
+			{$set: {firstName: data.firstName,
+				lastName: data.lastName,
+				gender: data.gender,
+				selfIntroduction: data.selfIntroduction}},
+			function(error, result) {
+				if (error !== undefined && error !== null) {	// occurs error
+					response.status(500);
+					client.close();
+					response.send("Since server encounters error, registration failed. details: " + error.message);
+				} else if (result === null) {	// occurs error
+					response.status(400);
+					client.close();
+					response.send("Cannot find user profile with email " + data.email + ". ");
+				} else {	// succeeded
+					console.log(result);
+					client.close();
+					response.send({
+						email: result._id,
+						username: result.username
+					});
 				}
 			});
 	});

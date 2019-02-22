@@ -13,7 +13,7 @@ class Register extends React.Component {
 			password: "",
 			confirmPassword: "",
 			validPassword: null,
-			jumpToProfile: null,
+			jumpToUpdateProfile: null,
 		};
 	}
 
@@ -62,7 +62,7 @@ class Register extends React.Component {
 				username: "",
 				password: "",
 				confirmPassword: "",
-				jumpToProfile: true,
+				jumpToUpdateProfile: true,
 			});
 		}).catch((error) => {
 			this.setState({
@@ -80,11 +80,16 @@ class Register extends React.Component {
 		if (this.state.validPassword === false) {
 			alert = <Alert variant={"warning"}>Passwords are not the same. </Alert>;
 		}
-		if (this.state.jumpToProfile) {
-			return (<Redirect to={"/user-profile"}/>);
+		if (this.state.jumpToUpdateProfile) {
+			return (<Redirect to={{pathname: "/detail", fromRegister: true}}/>);
 		} else {
 			return (
 				<Container>
+					<Row>
+						<Col className={"text-center my-4"}>
+							<h1>Register</h1>
+						</Col>
+					</Row>
 					<Form onSubmit={(e) => this.handleSubmit(e)}>
 						<Row>
 							<Col lg={"12"}>
