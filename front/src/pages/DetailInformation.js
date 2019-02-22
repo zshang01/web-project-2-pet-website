@@ -28,12 +28,9 @@ class DetailInformation extends React.Component {
 	handleOnChange(event) {
 		const name = event.target.name;
 		const value = event.target.value;
-		console.log(name + ": " + value);
 
 		this.setState({
 			[name]: value,
-		}, () => {
-			console.log("State." + name + ": " + this.state[name]);
 		});
 	}
 

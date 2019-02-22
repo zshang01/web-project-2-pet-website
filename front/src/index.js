@@ -4,7 +4,7 @@ import "./index.css";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import App from "./pages/App";
 import UserProfile from "./pages/UserProfile";
-import Contact from "./pages/contact";
+import PetRecommendation from "./pages/PetRecommendation";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavigationBar from "./pages/NavigationBar";
@@ -20,8 +20,9 @@ const routing = (
 				<Route path="/login" component={Login} />
 				<Route path="/register" component={Register} />
 				<Route path="/user-profile" component={UserProfile} />
-				<Route path="/contact" component={Contact} />
+				<Route path="/contact" component={PetRecommendation} />
 				<Route path="/detail" component={DetailInformation} />
+				<Route path="/recommendation" component={PetRecommendation} />
 			</div>
 		</Router>
 	</div>
