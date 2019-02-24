@@ -8,7 +8,7 @@ import PetRecommendation from "./pages/PetRecommendation";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NavigationBar from "./pages/NavigationBar";
-import DetailInformation from "./pages/DetailInformation";
+import ProfileUpdate from "./pages/ProfileUpdate";
 import Article from "./pages/Article";
 import * as serviceWorker from "./serviceWorker";
 
@@ -22,7 +22,7 @@ const routing = (
 				<Route path="/register" component={Register} />
 				<Route path="/user-profile" component={UserProfile} />
 				<Route path="/contact" component={PetRecommendation} />
-				<Route path="/detail" component={DetailInformation} />
+				<Route path="/update-profile" component={ProfileUpdate} />
 				<Route path="/recommendation" component={PetRecommendation} />
 				<Route path="/articles/:id" component={Article} />
 			</div>

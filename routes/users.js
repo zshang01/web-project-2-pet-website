@@ -20,7 +20,6 @@ router.get("/fetchUser", function(request, response) {
 	mongoClient.connect(url, function(error, client) {
 		assert.equal(error, null);
 		const token = request.query.token;
-		console.log(request.query);
 		const db = client.db("pet-website");
 		const tableName = "users-profile";
 		db.collection(tableName).findOne(
@@ -34,7 +33,6 @@ router.get("/fetchUser", function(request, response) {
 					client.close();
 					response.send("Cannot find user profile with email " + token + ". ");
 				} else {
-					console.log(result);
 					client.close();
 					response.send({
 						email: result._id,
@@ -67,7 +65,6 @@ router.post("/register", function(request, response) {
 						function(error, result) {
 							assert.equal(null, error);
 							assert.equal(1, result.insertedCount);
-							console.log("Insert succeeded. ");
 							client.close();
 							response.json({"message": "finish"});
 						});
@@ -92,18 +89,36 @@ router.post("/update-profile", function(request, response) {
 				if (error !== undefined && error !== null) {	// occurs error
 					response.status(500);
 					client.close();
-					response.send("Since server encounters error, registration failed. details: " + error.message);
+					response.send("Since server encounters error, updating profile failed. details: " + error.message);
 				} else if (result === null) {	// occurs error
 					response.status(400);
 					client.close();
 					response.send("Cannot find user profile with email " + data.email + ". ");
 				} else {	// succeeded
-					console.log(result);
-					client.close();
-					response.send({
-						email: result._id,
-						username: result.username
+					const petTableName = "pets-profile";
+					const petInfos = data.petInfos.map((value) => {
+						value["email"] = data.email;
+						return value;
 					});
+					db.collection(petTableName).insertMany(
+						petInfos,
+						function(error, result) {
+							if (error !== undefined && error !== null) {	// occurs error
+								response.status(500);
+								client.close();
+								response.send("Since server encounters error, updating profile failed. details: " + error.message);
+							} else if (result === null) {	// occurs error
+								response.status(400);
+								client.close();
+								response.send("Cannot find user profile with email " + data.email + ". ");
+							} else {	// succeeded
+								client.close();
+								response.send({
+									email: result._id,
+									username: result.username
+								});
+							}
+						});
 				}
 			});
 	});

@@ -4,12 +4,13 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import PetForm from "./PetForm";
+import PropTypes from "prop-types";
 
-class DetailInformation extends React.Component {
+class ProfileUpdate extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log("constructor");
-		let fromRegister = false;
+		// debug code
+		let fromRegister = true;
 		if (props.location.fromRegister) {
 			fromRegister = true;
 		}
@@ -21,7 +22,7 @@ class DetailInformation extends React.Component {
 			lastName: "",
 			gender: "",
 			selfIntroduction: "",
-			petCount: 0,
+			petInfos: [],
 		};
 	}
 
@@ -72,6 +73,7 @@ class DetailInformation extends React.Component {
 				lastName: this.state.lastName,
 				gender: this.state.gender,
 				selfIntroduction: this.state.selfIntroduction,
+				petInfos: this.state.petInfos,
 			}
 		}).then(() => {
 			this.setState({
@@ -82,15 +84,58 @@ class DetailInformation extends React.Component {
 	}
 
 	handleAddPet() {
+		const newPetInfos = this.state.petInfos.slice();
+		newPetInfos.push({
+			name: "",
+			gender: "",
+			species: "",
+			breed: "",
+			age: 0,
+			raisedYears: 0,
+			introduction: "",
+		});
 		this.setState({
-			petCount: this.state.petCount + 1,
+			petInfos: newPetInfos,
+		});
+	}
+
+	handleDeletePet(index) {
+		console.log(1);
+		const newPetInfos = this.state.petInfos.slice();
+		console.log(2);
+		newPetInfos[index] = null;
+		console.log(3);
+		this.setState({
+			petInfos: newPetInfos,
+		});
+	}
+
+	handlePetFormChange(index, event) {
+		const name = event.target.name;
+		let value = event.target.value;
+		if ((name === "age" || name === "raisedYears") && typeof(value) === "string") {
+			value = Number(value);
+		}
+		const newPetInfos = this.state.petInfos.slice();
+		(newPetInfos[index])[name] = value;
+		this.setState({
+			petInfos: newPetInfos,
 		});
 	}
 
 	renderPetForm() {
 		let docs = [];
-		for (let i = 0; i < this.state.petCount; i++) {
-			docs.push(<PetForm key={i}/>);
+		for (let i = 0; i < this.state.petInfos.length; i++) {
+			const petInfo = this.state.petInfos[i];
+			if (petInfo !== null) {
+				docs.push(
+					<PetForm
+						key={i}
+						index={i}
+						petInfo={petInfo}
+						onChange={(index, event) => this.handlePetFormChange(index, event)}
+						onDelete={(index) => this.handleDeletePet(index)} />);
+			}
 		}
 		return docs;
 	}
@@ -176,4 +221,10 @@ class DetailInformation extends React.Component {
 	}
 }
 
-export default DetailInformation;
+ProfileUpdate.propTypes = {
+	location: PropTypes.shape({
+		fromRegister: PropTypes.bool,
+	})
+};
+
+export default ProfileUpdate;
