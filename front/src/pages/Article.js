@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 import Cookies from "universal-cookie";
+import NavigationBar from "./NavigationBar";
 
 class Article extends React.Component {
 	constructor(props) {
@@ -82,9 +83,12 @@ class Article extends React.Component {
 				</Row>);
 		}
 		return (
-			<Container>
-				{displayContent}
-			</Container>
+			<div>
+				<NavigationBar />
+				<Container>
+					{displayContent}
+				</Container>
+			</div>
 		);
 	}
 }

@@ -87,30 +87,37 @@ router.post("/update-profile", function(request, response) {
 					client.close();
 					response.send("Cannot find user profile with email " + data.email + ". ");
 				} else {	// succeeded
-					const petTableName = "pets-profile";
-					const petInfos = data.petInfos.map((value) => {
-						value["email"] = data.email;
-						return value;
-					});
-					db.collection(petTableName).insertMany(
-						petInfos,
-						function(error, result) {
-							if (error !== undefined && error !== null) {	// occurs error
-								response.status(500);
-								client.close();
-								response.send("Since server encounters error, updating profile failed. details: " + error.message);
-							} else if (result === null) {	// occurs error
-								response.status(400);
-								client.close();
-								response.send("Cannot find user profile with email " + data.email + ". ");
-							} else {	// succeeded
-								client.close();
-								response.send({
-									email: result._id,
-									username: result.username
-								});
-							}
+					if (data.petInfos.length === 0) {
+						client.close();
+						response.status(200).send({
+							email: data.email,
 						});
+					} else {
+						const petTableName = "pets-profile";
+						const petInfos = data.petInfos.map((value) => {
+							value["email"] = data.email;
+							return value;
+						});
+						db.collection(petTableName).insertMany(
+							petInfos,
+							function (error, result) {
+								if (error !== undefined && error !== null) {	// occurs error
+									response.status(500);
+									client.close();
+									response.send("Since server encounters error, updating profile failed. details: " + error.message);
+								} else if (result === null) {	// occurs error
+									response.status(400);
+									client.close();
+									response.send("Cannot find user profile with email " + data.email + ". ");
+								} else {	// succeeded
+									client.close();
+									response.send({
+										email: result._id,
+										username: result.username
+									});
+								}
+							});
+					}
 				}
 			});
 	});

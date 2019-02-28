@@ -5,6 +5,7 @@ import axios from "axios";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import PetForm from "./PetForm";
 import PropTypes from "prop-types";
+import NavigationBar from "./NavigationBar";
 
 class ProfileUpdate extends React.Component {
 	constructor(props) {
@@ -138,75 +139,79 @@ class ProfileUpdate extends React.Component {
 		} else {
 			const petForm = this.renderPetForm();
 			return (
-				<Container>
-					<Row>
-						<Col className={"text-center my-4"} lg={"12"}>
-							<h1>We would like to know more about you and your pets</h1>
-						</Col>
-					</Row>
-					<Row>
-						<Col className={"text-right my-2"} lg={"12"}><a href="/user-profile"><h4>Skip Now</h4></a></Col>
-					</Row>
-					<Form onSubmit={(e) => {this.handleSubmit(e);}}>
-						<Form.Row>
-							<Col lg={"4"}>
-								<Form.Group controlId={"formFirstName"}>
-									<Form.Label>First Name: </Form.Label>
-									<Form.Control
-										type={"input"}
-										name={"firstName"}
-										value={this.state.firstName}
-										placeholder={"Your first name"}
-										onChange={(e) => this.handleOnChange(e)}/>
-								</Form.Group>
+				<div>
+					<NavigationBar />
+					<Container>
+						<Row>
+							<Col className={"text-center my-4"} lg={"12"}>
+								<h1>We would like to know more about you and your pets</h1>
 							</Col>
-							<Col lg={"4"}>
-								<Form.Group controlId={"formLastName"}>
-									<Form.Label>Last Name: </Form.Label>
-									<Form.Control
-										type={"input"}
-										name={"lastName"}
-										value={this.state.lastName}
-										placeholder={"Your last name"}
-										onChange={(e) => this.handleOnChange(e)}/>
-								</Form.Group>
-							</Col>
-							<Col lg={"4"}>
-								<Form.Group controlId={"formGender"}>
-									<Form.Label>Gender: </Form.Label>
-									<Form.Control
-										as={"select"}
-										name={"gender"}
-										value={this.state.gender}
-										onChange={(e) => this.handleOnChange(e)}>
-										<option></option>
-										<option>Male</option>
-										<option>Female</option>
-										<option>Other</option>
-									</Form.Control>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"formSelfIntroduction"}>
-									<Form.Label>Introduce yourself to others: </Form.Label>
-									<Form.Control
-										as={"textarea"}
-										name={"selfIntroduction"}
-										value={this.state.selfIntroduction}
-										rows={"5"}
-										onChange={(e) => this.handleOnChange(e)}
-									/>
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<hr />
-						{petForm}
-						<Button variant="outline-primary" onClick={() => {this.handleAddPet();}}>Add a pet</Button>
-						<Button variant={"primary"} type={"submit"}>Submit</Button>
-					</Form>
-				</Container>
+						</Row>
+						<Row>
+							<Col className={"text-right my-2"} lg={"12"}><a href="/user-profile"><h4>Skip Now</h4></a></Col>
+						</Row>
+						<Form onSubmit={(e) => {this.handleSubmit(e);}}>
+							<Form.Row>
+								<Col lg={"4"}>
+									<Form.Group controlId={"formFirstName"}>
+										<Form.Label>First Name: </Form.Label>
+										<Form.Control
+											type={"input"}
+											name={"firstName"}
+											value={this.state.firstName}
+											placeholder={"Your first name"}
+											onChange={(e) => this.handleOnChange(e)}/>
+									</Form.Group>
+								</Col>
+								<Col lg={"4"}>
+									<Form.Group controlId={"formLastName"}>
+										<Form.Label>Last Name: </Form.Label>
+										<Form.Control
+											type={"input"}
+											name={"lastName"}
+											value={this.state.lastName}
+											placeholder={"Your last name"}
+											onChange={(e) => this.handleOnChange(e)}/>
+									</Form.Group>
+								</Col>
+								<Col lg={"4"}>
+									<Form.Group controlId={"formGender"}>
+										<Form.Label>Gender: </Form.Label>
+										<Form.Control
+											as={"select"}
+											name={"gender"}
+											value={this.state.gender}
+											onChange={(e) => this.handleOnChange(e)}>
+											<option></option>
+											<option>Male</option>
+											<option>Female</option>
+											<option>Other</option>
+										</Form.Control>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"formSelfIntroduction"}>
+										<Form.Label>Introduce yourself to others: </Form.Label>
+										<Form.Control
+											as={"textarea"}
+											name={"selfIntroduction"}
+											value={this.state.selfIntroduction}
+											rows={"5"}
+											onChange={(e) => this.handleOnChange(e)}
+										/>
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<hr />
+							{petForm}
+							<Button variant="outline-primary" onClick={() => {this.handleAddPet();}}>Add a pet</Button>
+							<Button variant={"primary"} type={"submit"}>Submit</Button>
+						</Form>
+					</Container>
+				</div>
+
 			);
 		}
 	}

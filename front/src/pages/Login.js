@@ -4,6 +4,7 @@ import {Redirect} from "react-router-dom";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import Button from "react-bootstrap/Button";
+import NavigationBar from "./NavigationBar";
 
 class Login extends React.Component {
 	constructor(props) {
@@ -63,46 +64,49 @@ class Login extends React.Component {
 			return (<Redirect to={"/"} />);
 		} else {
 			return (
-				<Container>
-					<Row>
-						<Col className={"my-4"} lg={"12"}>
-							<h1>Sign In</h1>
-						</Col>
-					</Row>
-					<Form onSubmit={(e) => this.handleOnSubmit(e)}>
-						<Form.Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"formEmail"}>
-									<Form.Label>Email: </Form.Label>
-									<Form.Control
-										as={"input"}
-										type={"text"}
-										name={"email"}
-										value={this.state.email}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
+				<div>
+					<NavigationBar />
+					<Container>
+						<Row>
+							<Col className={"my-4"} lg={"12"}>
+								<h1>Sign In</h1>
 							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"formPassword"}>
-									<Form.Label>Password: </Form.Label>
-									<Form.Control
-										as={"input"}
-										type={"password"}
-										name={"password"}
-										value={this.state.password}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
-							</Col>
-						</Form.Row>
-						<Form.Row>
-							<Col lg={"12"}>
-								<Button variant={"primary"} type={"submit"}>Submit</Button>
-							</Col>
-						</Form.Row>
-					</Form>
-				</Container>
+						</Row>
+						<Form onSubmit={(e) => this.handleOnSubmit(e)}>
+							<Form.Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"formEmail"}>
+										<Form.Label>Email: </Form.Label>
+										<Form.Control
+											as={"input"}
+											type={"text"}
+											name={"email"}
+											value={this.state.email}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"formPassword"}>
+										<Form.Label>Password: </Form.Label>
+										<Form.Control
+											as={"input"}
+											type={"password"}
+											name={"password"}
+											value={this.state.password}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+							</Form.Row>
+							<Form.Row>
+								<Col lg={"12"}>
+									<Button variant={"primary"} type={"submit"}>Submit</Button>
+								</Col>
+							</Form.Row>
+						</Form>
+					</Container>
+				</div>
 			);
 		}
 	}

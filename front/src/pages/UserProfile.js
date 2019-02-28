@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 import {Redirect} from "react-router-dom";
 import "../css/user-profile.css";
 import { Container, Row, Col } from "react-bootstrap";
+import NavigationBar from "./NavigationBar";
 
 class UserProfile extends React.Component {
 	constructor(props) {
@@ -48,16 +49,19 @@ class UserProfile extends React.Component {
 			greetingsInfo = (<h1>Hello {this.state.username}! </h1>);
 		}
 		return (
-			<Container>
-				<Row>
-					<Col lg={"3"}>
-						<img className={"avatar"} src={"images/avatar.svg"} alt="" />
-					</Col>
-					<Col lg={"9"}>
-						{greetingsInfo}
-					</Col>
-				</Row>
-			</Container>
+			<div>
+				<NavigationBar />
+				<Container>
+					<Row>
+						<Col lg={"3"}>
+							<img className={"avatar"} src={"images/avatar.svg"} alt="" />
+						</Col>
+						<Col lg={"9"}>
+							{greetingsInfo}
+						</Col>
+					</Row>
+				</Container>
+			</div>
 		);
 	}
 

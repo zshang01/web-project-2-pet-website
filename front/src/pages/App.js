@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
+import NavigationBar from "./NavigationBar";
 
 class App extends React.Component {
 	constructor(props) {
@@ -20,27 +21,29 @@ class App extends React.Component {
 	}
 
 	render() {
-		const links = this.state.articleList.map((value) => {
+		const links = this.state.articleList.map((value, index) => {
 			return (
-				<li>
+				<li key={index}>
 					<a href={"/articles/" + value.id}>{value.name}</a>
 				</li>
 			);
 		});
 		return (
-			<Container>
-				<Row>
-					<Col className={"text-center my-4"} lg={"12"}>
-						<h1>Homepage</h1>
-					</Col>
-				</Row>
-				<Row>
-					<ul>
-						{links}
-					</ul>
-				</Row>
-			</Container>
-
+			<div>
+				<NavigationBar />
+				<Container>
+					<Row>
+						<Col className={"text-center my-4"} lg={"12"}>
+							<h1>Homepage</h1>
+						</Col>
+					</Row>
+					<Row>
+						<ul>
+							{links}
+						</ul>
+					</Row>
+				</Container>
+			</div>
 		);
 
 	}

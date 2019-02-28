@@ -7,7 +7,6 @@ import UserProfile from "./pages/UserProfile";
 import PetRecommendation from "./pages/PetRecommendation";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import NavigationBar from "./pages/NavigationBar";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Article from "./pages/Article";
 import ArticleModification from "./pages/ArticleModification";
@@ -16,7 +15,6 @@ import * as serviceWorker from "./serviceWorker";
 
 const routing = (
 	<div>
-		<NavigationBar />
 		<Router>
 			<div>
 				<Route exact path="/" component={App} />

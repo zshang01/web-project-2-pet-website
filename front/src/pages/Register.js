@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookie from "universal-cookie";
 import { Redirect } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import NavigationBar from "./NavigationBar";
 
 class Register extends React.Component {
 	constructor(props) {
@@ -84,71 +85,74 @@ class Register extends React.Component {
 			return (<Redirect to={{pathname: "/update-profile", fromRegister: true}}/>);
 		} else {
 			return (
-				<Container>
-					<Row>
-						<Col className={"text-center my-4"}>
-							<h1>Register</h1>
-						</Col>
-					</Row>
-					<Form onSubmit={(e) => this.handleSubmit(e)}>
+				<div>
+					<NavigationBar />
+					<Container>
 						<Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"email"}>
-									<Form.Label>Email</Form.Label>
-									<Form.Control
-										name={"email"}
-										value={this.state.email}
-										type={"email"}
-										placeholder={"example@server.com"}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
+							<Col className={"text-center my-4"}>
+								<h1>Register</h1>
 							</Col>
 						</Row>
-						<Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"username"}>
-									<Form.Label>Username</Form.Label>
-									<Form.Control
-										name={"username"}
-										value={this.state.username}
-										type={"input"}
-										placeholder={"username"}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
-							</Col>
-						</Row>
-						<Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"password"}>
-									<Form.Label>Password</Form.Label>
-									<Form.Control
-										name={"password"}
-										value={this.state.password}
-										type={"password"}
-										placeholder={"password"}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
-							</Col>
-						</Row>
-						<Row>
-							<Col lg={"12"}>
-								<Form.Group controlId={"confirmPassword"}>
-									<Form.Label>Confirm Password</Form.Label>
-									<Form.Control
-										name={"confirmPassword"}
-										value={this.state.confirmPassword}
-										type={"password"}
-										placeholder={"confirm password"}
-										onChange={(e) => this.handleOnChange(e)} />
-								</Form.Group>
-							</Col>
-							<Col>
-								{alert}
-							</Col>
-						</Row>
-						<Button variant={"primary"} type={"submit"}>Submit</Button>
-					</Form>
-				</Container>
+						<Form onSubmit={(e) => this.handleSubmit(e)}>
+							<Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"email"}>
+										<Form.Label>Email</Form.Label>
+										<Form.Control
+											name={"email"}
+											value={this.state.email}
+											type={"email"}
+											placeholder={"example@server.com"}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"username"}>
+										<Form.Label>Username</Form.Label>
+										<Form.Control
+											name={"username"}
+											value={this.state.username}
+											type={"input"}
+											placeholder={"username"}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"password"}>
+										<Form.Label>Password</Form.Label>
+										<Form.Control
+											name={"password"}
+											value={this.state.password}
+											type={"password"}
+											placeholder={"password"}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+							</Row>
+							<Row>
+								<Col lg={"12"}>
+									<Form.Group controlId={"confirmPassword"}>
+										<Form.Label>Confirm Password</Form.Label>
+										<Form.Control
+											name={"confirmPassword"}
+											value={this.state.confirmPassword}
+											type={"password"}
+											placeholder={"confirm password"}
+											onChange={(e) => this.handleOnChange(e)} />
+									</Form.Group>
+								</Col>
+								<Col>
+									{alert}
+								</Col>
+							</Row>
+							<Button variant={"primary"} type={"submit"}>Submit</Button>
+						</Form>
+					</Container>
+				</div>
 			);
 		}
 	}
