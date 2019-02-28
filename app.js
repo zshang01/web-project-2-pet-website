@@ -19,7 +19,8 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/front/build")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
@@ -40,6 +41,14 @@ app.use(function(err, req, res) {
 	// render the error page
 	res.status(err.status || 500);
 	res.render("error");
+});
+
+app.listen(process.env.PORT || 3000, function() {
+	console.log(
+		"Express server listening on port %d in %s mode",
+		this.address().port,
+		app.settings.env
+	);
 });
 
 module.exports = app;

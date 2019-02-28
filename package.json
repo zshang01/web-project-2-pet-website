@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "heroku-postbuild": "cd front && yarn install && yarn build",
-    "start": "set PORT=3001 && node ./bin/www"
+    "start": "node app.js"
   },
   "engines": {
     "node": "10.15.0",
