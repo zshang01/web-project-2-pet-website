@@ -6,6 +6,10 @@
     "heroku-postbuild": "cd front && yarn install && yarn build",
     "start": "set PORT=3001 && node ./bin/www"
   },
+  "engines": {
+    "node": "10.15.0",
+    "yarn": "1.13.0"
+  },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
