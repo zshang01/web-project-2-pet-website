@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "heroku-postbuild": "cd front && yarn install && yarn build",
     "start": "set PORT=3001 && node ./bin/www"
   },
   "dependencies": {
