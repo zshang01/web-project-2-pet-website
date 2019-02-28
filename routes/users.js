@@ -5,17 +5,9 @@ const assert = require("assert");
 
 const url = "mongodb://localhost:27017";
 
-/* GET users listing. */
-router.get("/", function(req, res) {
-	res.json([{
-		id: 1,
-		username: "samsepi0l"
-	}, {
-		id: 2,
-		username: "D0loresH4ze"
-	}]);
-});
-
+/*
+ Fetching specific user's profile data from mongodb with token passed from website.
+ */
 router.get("/fetchUser", function(request, response) {
 	mongoClient.connect(url, function(error, client) {
 		assert.equal(error, null);

@@ -16,6 +16,10 @@ class UserProfile extends React.Component {
 	}
 
 	componentDidMount() {
+		// After user login, we will save his or her id, also called token, to cookies so that other pages could recognize user's identity.
+		// Load user's token from cookies since we need to know who is visiting this website.
+		// If we load user's token successfully, fetch user's profile from backend.
+		// Otherwise, by setting validUser to false, we force user jump to login page.
 		const cookies = new Cookies();
 		const token = cookies.get("pwLoggedIn");
 		if (token === undefined || token === null || token === "") {
