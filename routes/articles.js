@@ -6,7 +6,7 @@ const assert = require("assert");
 
 
 // Connection URL
-const url = "mongodb+srv://wmsh:W0nbAiMRODGtBWcq@petsitedb-kym1q.mongodb.net/test?retryWrites=true";
+const url = process.env.MONGODB_URI || require("./mongoDetails.js");
 const dbName = "pet-website";
 
 // all path in this router share prefix /articles

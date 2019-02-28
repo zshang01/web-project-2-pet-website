@@ -4,7 +4,7 @@ const mongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 
 // Connection URL
-const url = "mongodb+srv://wmsh:W0nbAiMRODGtBWcq@petsitedb-kym1q.mongodb.net/test?retryWrites=true";
+const url = process.env.MONGODB_URI || require("./mongoDetails.js");
 
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)

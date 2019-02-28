@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 
-const url = "mongodb+srv://wmsh:W0nbAiMRODGtBWcq@petsitedb-kym1q.mongodb.net/test?retryWrites=true";
+const url = process.env.MONGODB_URI || require("./mongoDetails.js");
 
 /*
  Fetching specific user's profile data from mongodb with token passed from website.
