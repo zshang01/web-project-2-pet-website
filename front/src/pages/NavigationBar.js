@@ -29,7 +29,7 @@ class NavigationBar extends React.Component {
 		let rightCornerContent = null;
 		if (this.state.loggedIn) {
 			rightCornerContent = (
-				<a href="/user-profile"><img id={"rightCornerIcon"} src="images/avatar.svg" alt="" /></a>
+				<a href="/user-profile"><img id={"rightCornerIcon"} src="/images/avatar.svg" alt="" /></a>
 			);
 		} else {
 			rightCornerContent = (

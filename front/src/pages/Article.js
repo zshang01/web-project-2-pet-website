@@ -1,17 +1,27 @@
 import React from "react";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
+import CommentForm from "./CommentForm";
+import Comments from "./Comments";
+import Cookies from "universal-cookie";
 
 class Article extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			id: "",
 			display: false,
+			userToken: "",
+			enableComment: "",
+			comment: "",
 		};
 	}
 
 	componentDidMount() {
 		const id = this.props.match.params.id;
+		const cookies = new Cookies();
+		const userToken = cookies.get("pwLoggedIn");
 		axios.get("/articles/get-content", {
 			params: {
 				id: id,
@@ -23,7 +33,16 @@ class Article extends React.Component {
 				name: data.name,
 				content: data.content,
 				display: true,
+				userToken: userToken,
+				enableComment: userToken !== undefined && userToken !== null && userToken !== "",
+				comment: "",
 			});
+		});
+	}
+
+	handleCommentOnChange(newValue) {
+		this.setState({
+			comment: newValue,
 		});
 	}
 
@@ -42,6 +61,16 @@ class Article extends React.Component {
 							{this.state.content}
 						</Col>
 					</Row>
+					<hr />
+					<CommentForm
+						className={"my-4"}
+						articleId={this.state.id}
+						enableComment={this.state.enableComment}
+						comment={this.state.comment}
+						userToken={this.state.userToken}
+						commentOnChange={(value) => this.handleCommentOnChange(value)} />
+					<hr />
+					<Comments articleId={this.state.id} />
 				</div>
 			);
 		} else {
@@ -59,5 +88,13 @@ class Article extends React.Component {
 		);
 	}
 }
+
+Article.propTypes = {
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			id: PropTypes.string.isRequired,
+		}),
+	}),
+};
 
 export default Article;

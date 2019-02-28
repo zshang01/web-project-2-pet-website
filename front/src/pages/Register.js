@@ -81,7 +81,7 @@ class Register extends React.Component {
 			alert = <Alert variant={"warning"}>Passwords are not the same. </Alert>;
 		}
 		if (this.state.jumpToUpdateProfile) {
-			return (<Redirect to={{pathname: "/detail", fromRegister: true}}/>);
+			return (<Redirect to={{pathname: "/update-profile", fromRegister: true}}/>);
 		} else {
 			return (
 				<Container>

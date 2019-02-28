@@ -10,7 +10,7 @@ class ProfileUpdate extends React.Component {
 	constructor(props) {
 		super(props);
 		// debug code
-		let fromRegister = true;
+		let fromRegister = false;
 		if (props.location.fromRegister) {
 			fromRegister = true;
 		}
