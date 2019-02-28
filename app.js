@@ -27,6 +27,10 @@ app.use("/users", usersRouter);
 app.use("/recommendation", recommendationRouter);
 app.use("/articles", articles);
 
+app.get("*", (req,res) =>{
+	res.sendFile(path.join(__dirname + "/front/build/index.html"));
+});
+
 // catch 404 and forward to error handler/articles
 app.use(function(req, res, next) {
 	next(createError(404));
