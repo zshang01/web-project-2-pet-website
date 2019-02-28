@@ -25,11 +25,23 @@ class NavigationBar extends React.Component {
 		}
 	}
 
+	handleLogout(event) {
+		event.preventDefault();
+		const cookies = new Cookies();
+		cookies.remove("pwLoggedIn");
+		this.setState({
+			loggedIn: false,
+		});
+	}
+
 	render() {
 		let rightCornerContent = null;
 		if (this.state.loggedIn) {
 			rightCornerContent = (
-				<a href="/user-profile"><img id={"rightCornerIcon"} src="/images/avatar.svg" alt="" /></a>
+				<div>
+					<Button className={"mx-1"} variant={"primary"} onClick={(e) => this.handleLogout(e)}>Logout</Button>
+					<a href="/user-profile"><img id={"rightCornerIcon"} src="/images/avatar.svg" alt="" /></a>
+				</div>
 			);
 		} else {
 			rightCornerContent = (

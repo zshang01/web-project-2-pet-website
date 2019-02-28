@@ -36,12 +36,8 @@ class ProfileUpdate extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log("componentDidMount");
-		console.log("Check for accessibility for this page. ");
 		const cookies = new Cookies();
 		const token = cookies.get("pwLoggedIn");
-		console.log("Login token: " + token);
-		console.log("Accessibility: " + this.state.accessible);
 		if (this.state.accessible) {
 			this.setState({
 				token: token,
@@ -53,7 +49,6 @@ class ProfileUpdate extends React.Component {
 					jumpTo: "/login",
 				});
 			} else {
-				console.log("Jump to user-profile");
 				this.setState({
 					accessible: false,
 					jumpTo: "/user-profile",
@@ -100,11 +95,8 @@ class ProfileUpdate extends React.Component {
 	}
 
 	handleDeletePet(index) {
-		console.log(1);
 		const newPetInfos = this.state.petInfos.slice();
-		console.log(2);
 		newPetInfos[index] = null;
-		console.log(3);
 		this.setState({
 			petInfos: newPetInfos,
 		});
@@ -141,7 +133,6 @@ class ProfileUpdate extends React.Component {
 	}
 
 	render() {
-		console.log("Render. ");
 		if (this.state.accessible === false) {
 			return (<Redirect to={this.state.jumpTo} />);
 		} else {
