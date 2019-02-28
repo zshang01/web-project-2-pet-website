@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import NavigationBar from "./pages/NavigationBar";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Article from "./pages/Article";
+import ArticleModification from "./pages/ArticleModification";
+import Management from "./pages/Management";
 import * as serviceWorker from "./serviceWorker";
 
 const routing = (
@@ -25,6 +27,8 @@ const routing = (
 				<Route path="/update-profile" component={ProfileUpdate} />
 				<Route path="/recommendation" component={PetRecommendation} />
 				<Route path="/articles/:id" component={Article} />
+				<Route exact path="/admin" component={Management} />
+				<Route path="/admin/modify-article/:id" component={ArticleModification} />
 			</div>
 		</Router>
 	</div>

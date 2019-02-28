@@ -18,7 +18,6 @@ router.get("/list", function(request, response) {
 		const tableName = "articles";
 		const cursor = db.collection(tableName).find({}, {limit: 100});
 		cursor.map((e) => {return {id: e._id, name: e.name};}).toArray(function(error, result) {
-			console.log(result);
 			client.close();
 			response.send(result);
 		});
@@ -42,7 +41,6 @@ router.get("/get-content", function(request, response) {
 				client.close();
 				response.send("Cannot find article with id " + id + ". ");
 			} else {
-				console.log(result);
 				client.close();
 				response.send({
 					id: result._id,
@@ -86,7 +84,6 @@ router.post("/add-comment", function(request, response) {
 
 router.get("/get-comments", function(request, response) {
 	mongoClient.connect(url, function(error, client) {
-		console.log("here");
 		assert.equal(error, null);
 		const db = client.db(dbName);
 		const tableName = "comments";
@@ -100,10 +97,73 @@ router.get("/get-comments", function(request, response) {
 				time: e.time,
 			};
 		}).toArray(function(error, result) {
-			console.log(result);
 			client.close();
 			response.send(result);
 		});
+	});
+});
+
+router.delete("/delete", function (request, response) {
+	mongoClient.connect(url, function(error, client) {
+		assert.equal(error, null);
+		const db = client.db(dbName);
+		const articleTable = "articles";
+		const articleId = request.query.id;
+		db.collection(articleTable).deleteOne({_id: new ObjectID(articleId)}, function(error) {
+			if (error !== undefined && error !== null) {
+				client.close();
+				response.status(500);
+				response.send("Since server encounters error, delete article failed. details: " + error.message);
+			} else {
+				const commentTable = "comments";
+				db.collection(commentTable).deleteMany({articleId: articleId}, function(error) {
+					if (error !== undefined && error !== null) {
+						client.close();
+						response.status(500);
+						response.send("Since server encounters error, delete article's comments failed. details: " + error.message);
+					} else {
+						client.close();
+						response.status(200).end();
+					}
+				});
+			}
+		});
+	});
+});
+
+router.post("/modify", function(request, response) {
+	mongoClient.connect(url, function(error, client) {
+		assert.equal(error, null);
+		const db = client.db(dbName);
+		const table = "articles";
+		const data = request.body.data;
+		if (data.id === undefined || data.id === null || data.id === "") {	// add new article
+			db.collection(table).insertOne({name: data.title, content: data.content, modificationTime: new Date()},
+				function(error) {
+					if (error !== undefined && error !== null) {
+						client.close();
+						response.status(500);
+						response.send("Since server encounters error, modify article failed. details: " + error.message);
+					} else {
+						client.close();
+						response.status(200).end();
+					}
+				});
+		} else {	// modify article
+			db.collection(table).findOneAndUpdate(
+				{_id: new ObjectID(data.id)},
+				{$set: {name: data.title, content: data.content, modificationTime: new Date()}},
+				function(error) {
+					if (error !== undefined && error !== null) {
+						client.close();
+						response.status(500);
+						response.send("Since server encounters error, modify article failed. details: " + error.message);
+					} else {
+						client.close();
+						response.status(200).end();
+					}
+				});
+		}
 	});
 });
 

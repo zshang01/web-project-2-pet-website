@@ -35,10 +35,10 @@ class Comments extends React.Component {
 						<hr />
 						<Row >
 							<Col col={"3"}>
-								<h4>{value.userToken}</h4>
+								<h5>{value.userToken}</h5>
 							</Col>
 							<Col col={"3"}>
-								<h4>{value.time}</h4>
+								<h5>{value.time}</h5>
 							</Col>
 						</Row>
 						<Row className={"mb-3"}>
