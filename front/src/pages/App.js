@@ -15,7 +15,7 @@ class App extends React.Component {
 		axios.get("/articles/list", {})
 			.then((response) => {
 				this.setState({
-					articleList: response.data,
+					articleList: response.data, //后端叫resul t，前端叫response.data
 				});
 			});
 	}

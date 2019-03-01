@@ -26,31 +26,33 @@ router.get("/fetchUser", function(request, response) {
 					response.send("Cannot find user profile with email " + token + ". ");
 				} else {
 					const petTable = "pets-profile";
-					db.collection(petTable).findOne (
-						{email: token}, function(error, result1){
-							if (error !== undefined && error !== null) {	// occurs error
-								response.status(500);
-								client.close();
-								response.send("Since server encounters error, registration failed. details: " + error.message);
-							} else if (result1 === null) {
-								response.status(400);
-								client.close();
-								response.send("Cannot find user pet information with email " + token + ". ");
-							}  else {
-								client.close();
-								console.log(result1);
-								response.send({
-									email: result._id,
-									username: result.username,
-									petName: result1.name,
-									petGender: result1.gender,
-									petSpecies: result1.species,
-									petBreed: result1.breed,
-									petAge: result1.age,
-									petYears: result1.raisedYears,
-									petIntroduction: result1.introduction
-								})
-							}
+					const cursor = db.collection(petTable).find({email: token});
+					cursor.map((result1) => {return {
+						petName: result1.name,
+						petGender: result1.gender,
+						petSpecies: result1.species,
+						petBreed: result1.breed,
+						petAge: result1.age,
+						petYears: result1.raisedYears,
+						petIntroduction: result1.introduction
+					};}).toArray(function(error, res_arr){
+						if (error !== undefined && error !== null) {	// occurs error
+							response.status(500);
+							client.close();
+							response.send("Since server encounters error, registration failed. details: " + error.message);
+						} else if (res_arr === null) {
+							response.status(400);
+							client.close();
+							response.send("Cannot find user pet information with email " + token + ". ");
+						}  else {
+							client.close();
+							console.log(res_arr);
+							response.send({
+								email: result._id,
+								username: result.username,
+								petinfo: res_arr
+							});
+						}
 					});
 				}
 			});
@@ -96,9 +98,9 @@ router.post("/update-profile", function(request, response) {
 		db.collection(tableName).findOneAndUpdate(
 			{_id: data.email},
 			{$set: {firstName: data.firstName,
-				lastName: data.lastName,
-				gender: data.gender,
-				selfIntroduction: data.selfIntroduction}},
+					lastName: data.lastName,
+					gender: data.gender,
+					selfIntroduction: data.selfIntroduction}},
 			function(error, result) {
 				if (error !== undefined && error !== null) {	// occurs error
 					response.status(500);
