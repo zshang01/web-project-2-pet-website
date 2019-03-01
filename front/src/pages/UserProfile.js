@@ -58,13 +58,14 @@ class UserProfile extends React.Component {
 		const pet_arr = this.state.petInfoList.map((value, index) => {
 			return (
 				<li key={index}>
-					Name:{value.petName}
-					gender:{value.petGender}
-					species:{value.petSpecies}
-					Breed:{value.petBreed}
-					Age:{value.petAge}
-					years:{value.petYears}
-					Intro:{value.petIntroduction}
+					<span>
+						Name:{value.petName},
+						gender:{value.petGender},
+						species:{value.petSpecies},
+						Breed:{value.petBreed},
+						Age:{value.petAge},
+						years:{value.petYears},
+						Intro:{value.petIntroduction}</span>
 				</li>
 			);
 		});
